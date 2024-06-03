@@ -293,7 +293,7 @@ status_t LSM6DS3Core::writeRegister(uint8_t offset, uint8_t dataToWrite) {
 
 	case SPI_MODE:
 		// take the chip select low to select the device:
-    SPI.beginTransaction(mySpiSettings);
+    	SPI.beginTransaction(mySpiSettings);
 		digitalWrite(chipSelectPin, LOW);
 		// send the device the register you want to read:
 		SPI.transfer(offset);
@@ -302,6 +302,7 @@ status_t LSM6DS3Core::writeRegister(uint8_t offset, uint8_t dataToWrite) {
 		// decrement the number of bytes left to read:
 		// take the chip select high to de-select:
 		digitalWrite(chipSelectPin, HIGH);
+		SPI.endTransaction();
 		break;
 		
 		//No way to check error on this write (Except to read back but that's not reliable)
