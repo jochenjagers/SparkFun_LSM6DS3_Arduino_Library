@@ -88,16 +88,16 @@ status_t LSM6DS3Core::beginCore(void)
 		SPI.begin();
     
 #ifdef __AVR__ 
-    mySpiSettings = SPISettings(spiPortSpeed, MSB_FIRST, SPI_MODE1);
+    mySpiSettings = SPISettings(spiPortSpeed, MSB_FIRST, SPI_MODE3);
 #endif
 #if defined(ESP32) || defined(ESP8266)
-    mySpiSettings = SPISettings(spiPortSpeed, MSBFIRST, SPI_MODE1);
+    mySpiSettings = SPISettings(spiPortSpeed, MSBFIRST, SPI_MODE3);
 #endif
 #ifdef __MK20DX256__
-    mySpiSettings = SPISettings(spiPortSpeed, MSB_FIRST, SPI_MODE0);
+    mySpiSettings = SPISettings(spiPortSpeed, MSB_FIRST, SPI_MODE3);
 #endif
 #ifdef ARDUINO_NANO33BLE
-    mySpiSettings = SPISettings(spiPortSpeed, MSB_FIRST, SPI_MODE0);
+    mySpiSettings = SPISettings(spiPortSpeed, MSB_FIRST, SPI_MODE3);
 #endif
 
 		pinMode(chipSelectPin, OUTPUT);
