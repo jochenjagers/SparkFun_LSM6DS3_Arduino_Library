@@ -81,10 +81,13 @@ public:
 	
 	//Change to base page
 	status_t basePage( void );
-  SPISettings mySpiSettings;
-	
+
+  	SPISettings mySpiSettings;
+
+protected:
+	status_t checkWhoAmI();
+
 private:
-	
 	//Communication stuff
 	uint8_t commInterface;
 	uint8_t I2CAddress;

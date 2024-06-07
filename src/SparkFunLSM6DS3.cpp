@@ -59,6 +59,19 @@ LSM6DS3Core::LSM6DS3Core( uint8_t busType, uint8_t inputArg) : commInterface(I2C
 
 }
 
+status_t LSM6DS3Core::checkWhoAmI()
+{
+	status_t returnError = IMU_SUCCESS;
+	//Check the ID register to determine if the sensor is available
+	uint8_t readCheck;
+	readRegister(&readCheck, LSM6DS3_ACC_GYRO_WHO_AM_I_REG);
+	if( readCheck != 0x69 )
+	{
+		returnError = IMU_HW_ERROR;
+	}
+	return returnError;
+}
+
 status_t LSM6DS3Core::beginCore(void)
 {
 	status_t returnError = IMU_SUCCESS;
@@ -101,13 +114,7 @@ status_t LSM6DS3Core::beginCore(void)
 		temp++;
 	}
 
-	//Check the ID register to determine if the operation was a success.
-	uint8_t readCheck;
-	readRegister(&readCheck, LSM6DS3_ACC_GYRO_WHO_AM_I_REG);
-	if( readCheck != 0x69 )
-	{
-		returnError = IMU_HW_ERROR;
-	}
+	returnError = checkWhoAmI();
 
 	return returnError;
 
@@ -568,9 +575,7 @@ status_t LSM6DS3::begin(SensorSettings* pSettingsYouWanted)
 	if ( settings.tempEnabled == 1) {
 	}
 
-	//Return WHO AM I reg  //Not no mo!
-	uint8_t result;
-	readRegister(&result, LSM6DS3_ACC_GYRO_WHO_AM_I_REG);
+	returnError = checkWhoAmI();
 
 	return returnError;
 }
